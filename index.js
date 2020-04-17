@@ -7,6 +7,8 @@ var gitusername='';
 const gitpassword='';
 var gitrepository='';
 
+let git_email='';
+
 //Get Licence options before starting
 const licence_names=axios.get(`https://api.github.com/licenses`)
         .then(function(res) {
@@ -21,6 +23,11 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     message: "Enter your GitHub username:",
                     name: "username",
                     default: "jo3005"
+                },
+                {   type: "input",
+                    message: "Enter your GitHub email:",
+                    name: "email",
+                    default: "joanna.sikorska@uwa.edu.au"
                 },
                 {
                     type: "input",
@@ -94,8 +101,12 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 //console.log(data);
                 gitusername=data.username;
                 gitrepository=data.repository;
+                git_email=data.email;
                 let cont_text = '';
                 let toc_contents='';
+                let badges_content='';
+                let readmedata='';
+                
                 function get_cont_text(data){
                     const whichcontributing = data.contributing;
                     
@@ -121,7 +132,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     let readmeKeys= '';
                     Object.keys(data).forEach(function(key){
                         let newkey=key;
-                        const ignore=['username','title','description','contributing_text','repository']
+                        const ignore=['username','title','description','contributing_text','repository','email']
                         //console.log(newkey);
                         if(ignore.indexOf(newkey) == -1){
                             
@@ -132,46 +143,79 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                   return readmeKeys;
                 };
 
+                function get_badges(data){
+                    return '';
+                };
+
+                function get_links(gituser,data){
+                    let links_text= `Github repo url: https://github.com/${gituser}/${data.repository}\n`;
+                    links_text=links_text + `Deployed url: https://${gituser}.github.io/${data.repository}`;
+                    return links_text;
+                }
+
+                function format_readme(gituser,data,cont_text,toc_contents,badges_content){
+                    const queryURL='https://api.github.com/users/'+ gituser;
+                    const userdata=axios.get(queryURL)
+                        .then(function(res) {
+                            const user_data={
+                                name: res.data.name,
+                                avatar:res.data.avatar_url,
+                                email:git_email
+                            }
+                            return user_data;
+                        })
+                        .then(gitdata =>{
+                            // Format data for the links to be included
+                            const links_text=get_links(gitusername,data);
+                            
+                            //Format data for the questions section to be included
+                            const questions= `Contact: ${gitdata.name} ![${gitdata.name}](${gitdata.avatar}=30x)\n Email:${gitdata.email}`;
+                            
+                            // pool all the data that will be displayed together. This will be written in the next section
+                            const readmeData={
+                                title:'#'+ data.title +' \n' + badges_content + ' \n',
+                                description: '##Description ' +' \n'+ data.description +' \n',
+                                links: '##Links ' + ' \n' + links_text + ' \n ',
+                                contents: '##Table of Contents ' +' \n'+ toc_contents +' \n',
+                                installation: '##Installation <a name="installation"></a>'+'\n'+ data.installation +' \n',
+                                usage:'##Usage <a name="usage"></a>'+'\n'+ data.usage +' \n',
+                                license: '##Licence <a name="licence"></a>'+'\n'+ data.licence +' \n',
+                                contributing: '##Contributing <a name="contributing"></a>'+' \n'+ cont_text +' \n',
+                                tests: '##Tests <a name="tests"></a>'+'\n'+ data.tests +' \n',
+                                questions: '##Questions <a name="questions"></a>'+' \n'+ questions +' \n'
+                            };
+                            
+                            return readmeData;
+                        });
+                    return userdata;    
+                };
                 cont_text=get_cont_text(data);
                 toc_contents = create_toc(data);
-
-                console.log(toc_contents);
-
-                const readmeData={
-                    title:'#'+ data.title +' \n',
-                    description: '##Description ' +' \n'+ data.description +' \n',
-                    contents: '##Table of Contents ' +' \n'+ toc_contents +' \n',
-                    installation: '##Installation <a name="installation"></a>'+'\n'+ data.installation +' \n',
-                    usage:'##Usage <a name="usage"></a>'+'\n'+ data.usage +' \n',
-                    license: '##Licence <a name="licence"></a>'+'\n'+ data.licence +' \n',
-                    contributing: '##Contributing <a name="contributing"></a>'+' \n'+ cont_text +' \n',
-                    tests: '##Tests <a name="tests"></a>'+'\n'+ data.tests +' \n',
-                    questions: '##Questions <a name="questions"></a>'+' \n'+ data.questions +' \n'
-                }; 
-                //console.log(readmeData);
-                return readmeData;
+                badges_content=get_badges(data);
+                readmedata=format_readme(gitusername,data,cont_text,toc_contents,badges_content);
+                //console.log(readmedata);
+                return readmedata;
               })
               .then(data => {
-                 //console.log(data);
+                  // Create the string that will be written to file
+                
                   let readmeText= '';
                   Object.values(data).forEach(function(value){
                     const newtext=value;
-                    console.log(newtext);
                     readmeText=readmeText + '\n' + newtext;
                   })
-                  
                   return readmeText;
               })
               .then(readmeText => {
-                fs.writeFile(fileName, readmeText, function(err) {
-
-                    if (err) {
-                      return console.log(err);
-                    }
-                  
-                    console.log("New file created!");
-                  
-                  });
+               //Write this string to the file
+                   fs.writeFile(fileName, readmeText, function(err) {
+                        if (err) {
+                        return console.log(err);
+                        }
+                    
+                        console.log("New file created!");
+                    
+                    });
               })
               .catch(error => {
                 console.log(error)
