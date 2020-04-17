@@ -6,12 +6,12 @@ This repo contains code that creates a Readme.md file for a new github repositor
 
 ##Table of Contents  
 
- * [Installation] (installation)
- * [Usage] (usage)
- * [Licence] (licence)
- * [Contributing] (contributing)
- * [Tests] (tests)
- * [Questions] (questions) 
+ * [Installation](#installation)
+ * [Usage](#usage)
+ * [Licence](#licence)
+ * [Contributing](#contributing)
+ * [Tests](#tests)
+ * [Questions](#questions) 
 
 ##Installation <a name="installation"></a>
 Installation guidelines have not yet been defined. 

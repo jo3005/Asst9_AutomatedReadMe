@@ -125,7 +125,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                         //console.log(newkey);
                         if(ignore.indexOf(newkey) == -1){
                             
-                            readmeKeys=readmeKeys + '\n * [' + newkey.charAt(0).toUpperCase() + newkey.slice(1) + '] (' + newkey + ')';
+                            readmeKeys=readmeKeys + '\n * [' + newkey.charAt(0).toUpperCase() + newkey.slice(1) + '](#' + newkey + ')';
                         }
                         
                   })
