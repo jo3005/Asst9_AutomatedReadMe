@@ -89,12 +89,6 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     name: "tests",
                     default: "No test information is available at this time."
             
-                },
-                {
-                    type: "input",
-                    message: "Enter any questions text:",
-                    name: "questions",
-                    default:"No question information is available at this time."
                 }
             ])
             .then(data => {

@@ -11,7 +11,6 @@ Deployed url: https://jo3005.github.io/automated_readme
  
 ##Table of Contents  
 
- * [Email](#email)
  * [Installation](#installation)
  * [Usage](#usage)
  * [Licence](#licence)
@@ -26,10 +25,10 @@ Installation guidelines have not yet been defined.
 Usage guidelines have not yet been defined. 
 
 ##Licence <a name="licence"></a>
-GNU Affero General Public License v3.0 
+Apache License 2.0 
 
 ##Contributing <a name="contributing"></a> 
- 
+ No contribution allowed 
 
 ##Tests <a name="tests"></a>
 No test information is available at this time. 
