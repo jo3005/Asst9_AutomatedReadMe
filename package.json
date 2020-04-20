@@ -1,7 +1,7 @@
 {
   "name": "asst9_package.json",
   "version": "1.0.0",
-  "description": "Pacakges required for the assignment",
+  "description": "Packages required for the assignment",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

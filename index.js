@@ -1,10 +1,11 @@
+const BG=require ('./lib/badge.js');
+
 const fs = require("fs");
 const inquirer = require("inquirer");
 const axios = require("axios");
 
-const fileName='output.md';
+const fileName='newREADME.md';
 var gitusername='';
-const gitpassword='';
 var gitrepository='';
 
 let git_email='';
@@ -45,7 +46,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     type: "input",
                     message: "Enter a description of your repository:",
                     name: "description",
-                    default: "This repo contains code that creates a Readme.md file for a new github repository"
+                    default: "This repo contains code that creates a Readme.md file for a new github repository."
                 },
                 {
                     type: "input",
@@ -69,8 +70,8 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     type: "list",
                     message: "How can users contribute:",
                     name: "contributing",
-                    choices:["1. No contribution allowed",
-                            "2. As per the Contributor Covenant v2.0",
+                    choices:["1. No contribution allowed.",
+                            "2. As per the Contributor Covenant v2.0.",
                             "3. Other"],
                     default: "3. Other"
                 },
@@ -88,7 +89,6 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     message: "Enter any test information:",
                     name: "tests",
                     default: "No test information is available at this time."
-            
                 }
             ])
             .then(data => {
@@ -114,10 +114,14 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                             return data.contributing.substring(2) + '. For more details go to ' + 'http://www.contributor-convenant.org';
                             break;
                         case "3":
-                            return data.contributing_text;
+                            if (data.contributing_text ===''){
+                                return 'No contributing information is available at this time.'
+                            } else {
+                                return data.contributing_text
+                            };
                             break;
                         default:
-                            return 'No contributing information is available at this time';
+                            return 'No contributing information is available at this time.';
                     }
                     
                 };
@@ -137,18 +141,54 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                   return readmeKeys;
                 };
 
-                function get_badges(data){
-                    return '';
-                };
-
                 function get_links(gituser,data){
                     let links_text= `Github repo url: https://github.com/${gituser}/${data.repository}\n`;
                     links_text=links_text + `Deployed url: https://${gituser}.github.io/${data.repository}`;
                     return links_text;
                 }
 
+                function make_badges(){
+                    const badges=[];
+                    //licence badge
+                    let newBadge=new BG({
+                        label : 'Licence',
+                        message : `${data.licence.replace(/ /g,'%20')}`,
+                        color : 'blue'});
+                    
+                    badges.push(newBadge);
+
+                    newBadge= new BG({
+                        label : 'axios',
+                        message : JSON.parse(fs.readFileSync('package.json', 'utf8')).dependencies.axios,
+                        color : 'green'
+                        });
+                    badges.push(newBadge);
+                    
+                    newBadge= new BG({
+                        label : 'inquirer',
+                        message : JSON.parse(fs.readFileSync('package.json', 'utf8')).dependencies.inquirer,
+                        color : 'green'
+                        });
+                    badges.push(newBadge);
+                    
+                    return badges;
+                };
+
+                function get_badge_string(){
+                    const badges_array = make_badges();
+                    let badge_string='';
+
+                    badges_array.forEach(value=> {
+                        const newbadgestring=value.makeURL();
+                        badge_string= badge_string + `  ![${value.label}](${newbadgestring})`;
+
+                    })
+                    return badge_string + '\n';
+                }
+
                 function format_readme(gituser,data,cont_text,toc_contents,badges_content){
-                    const queryURL='https://api.github.com/users/'+ gituser;
+                    const queryURL=`https://api.github.com/users/${gituser}`;
+                    
                     const userdata=axios.get(queryURL)
                         .then(function(res) {
                             const user_data={
@@ -163,11 +203,12 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                             const links_text=get_links(gitusername,data);
                             
                             //Format data for the questions section to be included
-                            const questions= `Contact: ${gitdata.name} ![${gitdata.name}](${gitdata.avatar}=30x)\n Email:${gitdata.email}`;
-                            
+                            const questions= `Contact: ${gitdata.name} <img src="${gitdata.avatar}" width="50" height="50"></img> \n Email: ${gitdata.email}`;
+                            let includeBadges=get_badge_string();
                             // pool all the data that will be displayed together. This will be written in the next section
                             const readmeData={
                                 title:'#'+ data.title +' \n' + badges_content + ' \n',
+                                badges:includeBadges,
                                 description: '##Description ' +' \n'+ data.description +' \n',
                                 links: '##Links ' + ' \n' + links_text + ' \n ',
                                 contents: '##Table of Contents ' +' \n'+ toc_contents +' \n',
@@ -185,7 +226,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 };
                 cont_text=get_cont_text(data);
                 toc_contents = create_toc(data);
-                badges_content=get_badges(data);
+                //badges_content=get_badges(data);
                 readmedata=format_readme(gitusername,data,cont_text,toc_contents,badges_content);
                 //console.log(readmedata);
                 return readmedata;
