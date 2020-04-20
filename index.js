@@ -4,7 +4,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const axios = require("axios");
 
-const fileName='newREADME.md';
+const fileName='./output/README.md';
 var gitusername='';
 var gitrepository='';
 
@@ -109,17 +109,17 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     switch(cont_number) {
                         case "1": // no contributing 
                             return data.contributing.substring(2);
-                            break;
+                            //break;
                         case "2": // 'As per the Contributor Covenant v2.0'
                             return data.contributing.substring(2) + '. For more details go to ' + 'http://www.contributor-convenant.org';
-                            break;
+                            //break;
                         case "3":
                             if (data.contributing_text ===''){
                                 return 'No contributing information is available at this time.'
                             } else {
                                 return data.contributing_text
                             };
-                            break;
+                            //break;
                         default:
                             return 'No contributing information is available at this time.';
                     }
@@ -157,7 +157,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     
                     badges.push(newBadge);
 
-                    newBadge= new BG({
+                    /* newBadge= new BG({
                         label : 'axios',
                         message : JSON.parse(fs.readFileSync('package.json', 'utf8')).dependencies.axios,
                         color : 'green'
@@ -169,7 +169,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                         message : JSON.parse(fs.readFileSync('package.json', 'utf8')).dependencies.inquirer,
                         color : 'green'
                         });
-                    badges.push(newBadge);
+                    badges.push(newBadge); */
                     
                     return badges;
                 };

@@ -2,7 +2,7 @@
 #Automated Readme File Generator 
  
 
-  ![Licence](https://img.shields.io/static/v1?label=Licence&message=MIT%20License&color=blue)  ![axios](https://img.shields.io/static/v1?label=axios&message=^0.19.0&color=green)  ![inquirer](https://img.shields.io/static/v1?label=inquirer&message=^6.5.0&color=green)
+  ![Licence](https://img.shields.io/static/v1?label=Licence&message=Apache%20License%202.0&color=blue)
 
 ##Description  
 This repo contains code that creates a Readme.md file for a new github repository. 
@@ -26,7 +26,7 @@ Installation guidelines have not yet been defined.
 Usage guidelines have not yet been defined. 
 
 ##Licence <a name="licence"></a>
-MIT License 
+Apache License 2.0 
 
 ##Contributing <a name="contributing"></a> 
  As per the Contributor Covenant v2.0.. For more details go to http://www.contributor-convenant.org 
