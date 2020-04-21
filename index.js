@@ -143,7 +143,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
 
                 function get_links(gituser,data){
                     let links_text= `Github repo url: https://github.com/${gituser}/${data.repository}\n`;
-                    links_text=links_text + `Deployed url: https://${gituser}.github.io/${data.repository}/`;
+                    links_text=links_text + `\n Deployed url: https://${gituser}.github.io/${data.repository}/`;
                     return links_text;
                 }
 
