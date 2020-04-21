@@ -23,30 +23,30 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 {   type: "input",
                     message: "Enter your GitHub username:",
                     name: "username",
-                    default: "jo3005"
+                    default: ""
                 },
                 {   type: "input",
                     message: "Enter your GitHub email:",
                     name: "email",
-                    default: "joanna.sikorska@uwa.edu.au"
+                    default: ""
                 },
                 {
                     type: "input",
                     message: "Enter your new repository name:",
                     name: "repository",
-                    default: "automated_readme"
+                    default: ""
                 },
                 {
                     type: "input",
                     message: "Enter a short title for your project:",
                     name: "title",
-                    default: "Automated Readme File Generator"
+                    default: ""
                 },
                 {
                     type: "input",
                     message: "Enter a description of your repository:",
                     name: "description",
-                    default: "This repo contains code that creates a Readme.md file for a new github repository."
+                    default: ""
                 },
                 {
                     type: "input",
@@ -70,10 +70,10 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                     type: "list",
                     message: "How can users contribute:",
                     name: "contributing",
-                    choices:["1. No contribution allowed.",
+                    choices:["1. Unfortunately, there is no facility for external contributions at this time.",
                             "2. As per the Contributor Covenant v2.0.",
                             "3. Other"],
-                    default: "3. Other"
+                    default: "2. As per the Contributor Covenant v2.0."
                 },
                 {
                     type: "input",
@@ -115,13 +115,13 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                             //break;
                         case "3":
                             if (data.contributing_text ===''){
-                                return 'No contributing information is available at this time.'
+                                return 'Unfortunately, there is no facility for external contributions at this time.'
                             } else {
                                 return data.contributing_text
                             };
                             //break;
                         default:
-                            return 'No contributing information is available at this time.';
+                            return 'Unfortunately, there is no facility for external contributions at this time.';
                     }
                     
                 };
@@ -232,7 +232,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 return readmedata;
               })
               .then(data => {
-                  // Create the string that will be written to file
+                  // Create the string that will be written to a file
                 
                   let readmeText= '';
                   Object.values(data).forEach(function(value){
@@ -261,49 +261,5 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
 
         }) 
     ; 
-
-
-
-
-
-
-
-
-
-/* 
-// Create new readme file
-fs.writeFile(readme.filename, '', function(err) {
-
-  if (err) {
-    return console.log(err);
-  }
-
-  console.log("New file created!");
-
-});
-
-fs.appendFile(readme.filename,readme.title,function(err){
-    if (err) {
-        return console.log(err);
-      }
-    
-      console.log("Title added");
-});
-fs.appendFile(readme.filename,readme.description,function(err){
-    if (err) {
-        return console.log(err);
-      }
-    
-      console.log("Description added");
-}); 
-fs.appendFile(readme.filename,readme.contents,function(err){
-    if (err) {
-        return console.log(err);
-      }
-    
-      console.log("Table of Contents added");
-});
- */
-
 
 
