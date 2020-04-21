@@ -5,11 +5,11 @@
   ![Licence](https://img.shields.io/static/v1?label=Licence&message=MIT%20License&color=blue)
 
 ##Description  
-This repository contains code that generates a new readme.md file based on answers given by the user.  The code is designed to be executed using  node.js and utilises the axios and inquirer packages for node.   This readme file was created using this code as an example of the output that can be expected.
+This repository contains code that creates an automated Readme.md file based on user input.  The javascript file runs in node.js and uses the inquirer and axios packages.  The readme file you are reading was created with this code, to illustrate the output. 
 
 ##Links  
-Github repo url: https://github.com/jo3005/automated_readme
-Deployed url: https://jo3005.github.io/automated_readme 
+Github repo url: https://github.com/jo3005/Asst9_AutomatedReadme
+Deployed url: https://jo3005.github.io/Asst9_AutomatedReadme 
  
 ##Table of Contents  
 
@@ -20,10 +20,10 @@ Deployed url: https://jo3005.github.io/automated_readme
  * [Tests](#tests) 
 
 ##Installation <a name="installation"></a>
-Clone the repository. Open a terminal in the same directory as the index.js file.  Install the packages by typing 'npm install' into the terminal.  Once the packages have finished installing, type 'node index.js' into the terminal.  The program will then start to execute. 
+To install this code, simply clone the repo. 
 
 ##Usage <a name="usage"></a>
-To use the program, run 'node index.js' after the packages have been installed.  Follow the prompts and enter data as directed.  The new readme.md file that is generated will be saved in the the output folder. 
+To use the code you will need to first open a terminal in the same directory as the index.js file.  Then type in 'npm install' into the terminal.  Once the packages have finished loading, you can enter 'node index.js' to run the file.  Follow the prompts and enter the information as requested. Once all questions have been answered, then the program will save the readme.md file to the output folder.    
 
 ##Licence <a name="licence"></a>
 MIT License 
