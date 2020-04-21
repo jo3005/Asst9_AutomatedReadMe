@@ -77,7 +77,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 },
                 {
                     type: "input",
-                    message: "Enter the contributing text:",
+                    message: "Enter the contributing text: ",
                     name: "contributing_text",
                     when: function(answers){
                         return(answers.contributing==="3. Other")
@@ -86,7 +86,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                 },
                 {
                     type: "input",
-                    message: "Enter any test information:",
+                    message: "Enter any test information: ",
                     name: "tests",
                     default: "No test information is available at this time."
                 }
@@ -143,7 +143,7 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
 
                 function get_links(gituser,data){
                     let links_text= `Github repo url: https://github.com/${gituser}/${data.repository}\n`;
-                    links_text=links_text + `Deployed url: https://${gituser}.github.io/${data.repository}`;
+                    links_text=links_text + `Deployed url: https://${gituser}.github.io/${data.repository}/`;
                     return links_text;
                 }
 
@@ -207,17 +207,17 @@ const licence_names=axios.get(`https://api.github.com/licenses`)
                             let includeBadges=get_badge_string();
                             // pool all the data that will be displayed together. This will be written in the next section
                             const readmeData={
-                                title:'#'+ data.title +' \n' + badges_content + ' \n',
+                                title:'# '+ data.title +' \n' + badges_content + ' \n',
                                 badges:includeBadges,
-                                description: '##Description ' +' \n'+ data.description +' \n',
-                                links: '##Links ' + ' \n' + links_text + ' \n ',
-                                contents: '##Table of Contents ' +' \n'+ toc_contents +' \n',
-                                installation: '##Installation <a name="installation"></a>'+'\n'+ data.installation +' \n',
-                                usage:'##Usage <a name="usage"></a>'+'\n'+ data.usage +' \n',
-                                license: '##Licence <a name="licence"></a>'+'\n'+ data.licence +' \n',
-                                contributing: '##Contributing <a name="contributing"></a>'+' \n'+ cont_text +' \n',
-                                tests: '##Tests <a name="tests"></a>'+'\n'+ data.tests +' \n',
-                                questions: '##Questions <a name="questions"></a>'+' \n'+ questions +' \n'
+                                description: '## Description ' +' \n'+ data.description +' \n',
+                                links: '## Links ' + ' \n' + links_text + ' \n ',
+                                contents: '## Table of Contents ' +' \n'+ toc_contents +' \n',
+                                installation: '## Installation <a name="installation"></a>'+'\n'+ data.installation +' \n',
+                                usage:'## Usage <a name="usage"></a>'+'\n'+ data.usage +' \n',
+                                license: '## Licence <a name="licence"></a>'+'\n'+ data.licence +' \n',
+                                contributing: '## Contributing <a name="contributing"></a>'+' \n'+ cont_text +' \n',
+                                tests: '## Tests <a name="tests"></a>'+'\n'+ data.tests +' \n',
+                                questions: '## Questions <a name="questions"></a>'+' \n'+ questions +' \n'
                             };
                             
                             return readmeData;
